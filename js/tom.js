@@ -22,8 +22,8 @@
     var App = global.hhba = global.hhba || {},
         $doc = $(document),
 
-        backColor = '#2f2f2f',
-        gridlinesColor = '#3e3e3e',
+        backColor = '#FFF',
+        gridlinesColor = '#CCC',
         axisTitleColor = '#c4c4b5',
         color1 = '#db844e',
         color2 = '#eda637',
@@ -31,7 +31,7 @@
         color4 = '#4bb3d3',
 
         DEFAULT_STYLE = {
-                    width: 480,
+                    width: 800,
                     height: 250,
                     legend: 'none',
                     backgroundColor: backColor,
