@@ -68,45 +68,22 @@
         isGoogleApiLoaded = false,
         isChartReady = false,
 
-        parseTweetsPerHour = function() {
-            console.time('tweetsPerHour');
-            var all = hhba.tweets,
-                i = 0,
-                l = all.length,
-                date = null,
-                hours = [],
-                j;
-            for (j = 0; j < 24; j++) {
-                hours.push(0);
-            }
-            for (; i < l; i++) {
-                date = new Date(all[i].created_at);
-                // only for Nov 8.
-                if (date.getDate() === 8) {
-                    hours[date.getHours()]++;
-                }
-            }
-            console.timeEnd('tweetsPerHour');
-            return hours;
-        },
-
         updateChart = function() {
             if (!isTweetsLoaded || !isChartReady) {
                 return false;
             }
-            var day1 = parseTweetsPerHour(),
-                i = 0,
-                l = day1.length,
+            var i = 0,
+                l = App.tweets_per_hour.length,
                 data = [],
                 label;
 
             data.push(['Hora',    '8N']);
             for (; i < l; i++) {
                 label = (i < 10) ? '0' + i : i+'';
-                data.push([label, day1[i]]);
+                data.push([label, App.tweets_per_hour[i]]);
             }
 
-            DEFAULT_STYLE.vAxis.maxValue = Math.max.apply(null, day1);
+            DEFAULT_STYLE.vAxis.maxValue = Math.max.apply(null, App.tweets_per_hour);
 
             google.visualization.events.removeAllListeners(chart);
             chart.draw(google.visualization.arrayToDataTable(data), DEFAULT_STYLE);
@@ -125,10 +102,12 @@
         return $widget;
     };
 
-    $doc.bind('TWEETS_LOADED', function() {
+    $.getJSON('tweets_per_hour.json', function(response) {
         isTweetsLoaded = true;
+        App.tweets_per_hour = response.data;
         updateChart();
     });
+
     $doc.bind('GOOGLE_API_LOADED', function() {
         isGoogleApiLoaded = true;
         var i = 0,
