@@ -31,15 +31,16 @@
         color4 = '#4bb3d3',
 
         DEFAULT_STYLE = {
-                    width: 800,
+                    width: 480,
                     height: 250,
                     legend: 'none',
                     backgroundColor: backColor,
+                    curveType: 'function',
                     animation: {
                         duration: 500
                     },
                     chartArea: {
-                        width: '85%',
+                        width: '100%',
                         height: '80%',
                         left: 50,
                         top: '10%'
@@ -83,6 +84,8 @@
                 data.push([label, App.tweets_per_hour[i]]);
             }
 
+            // DEFAULT_STYLE.width = App.widgets.get 
+            DEFAULT_STYLE.width = App.widgets._container.width() - 40;
             DEFAULT_STYLE.vAxis.maxValue = Math.max.apply(null, App.tweets_per_hour);
 
             google.visualization.events.removeAllListeners(chart);
@@ -90,6 +93,8 @@
         },
 
         chart = null;
+
+    $(global).resize(updateChart);
 
     App.widgets.parsers.LineChart = function(info) {
         var $widget = $('<div class="widget" style="margin: 20px"></div>');
