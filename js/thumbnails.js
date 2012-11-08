@@ -26,7 +26,8 @@
           a.href = '#';
           a.target = '_blank';
           a.appendChild(img);
-          li.className = 'item thumbnail';
+          li.className = 'thumbnail';
+          li.className = 'item';
           li.appendChild(a);
           img.src = media[i].media_url_https;
           img.width = 220;
