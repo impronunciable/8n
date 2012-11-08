@@ -22,6 +22,15 @@
         title: tweet.text
       });
 
+
+      var infowindow = new google.maps.InfoWindow({
+        content: "<img src='"+tweet.user.profile_image_url+"' style='float:left; padding: 5px;' /><strong>"+tweet.user.screen_name+"</strong>: "+tweet.text
+      });
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
+
     });
 
   });
