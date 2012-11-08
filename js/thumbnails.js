@@ -19,20 +19,20 @@
         if(media[i].type === "photo") {
 
           var img = document.createElement('img');
-          var li = document.createElement('li');
+          var span = document.createElement('span');
           var a = document.createElement('a');
     
           a.appendChild(img);
           a.href = '#';
           a.target = '_blank';
           a.appendChild(img);
-          li.className = 'thumbnail';
-          li.className = 'item';
-          li.appendChild(a);
+          a.className = 'thumbnail';
+          span.className = 'item';
+          span.appendChild(a);
           img.src = media[i].media_url_https;
           img.width = 220;
           img.onload = function(){
-            $thumbs.prepend(li);
+            $thumbs.prepend(span);
             wall.reload();
           };
 

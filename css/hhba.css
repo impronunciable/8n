@@ -253,3 +253,21 @@ a {
 
     }
     
+    .media {
+      overflow: visible;
+    }
+    .masonry-brick { -webkit-transition: all .1s ease-in-out; margin-top: 10px;    }
+    .masonry-brick:hover { -webkit-transform: scale(1.5); z-index: 10000!important; }
+    
+    .masonry-brick a {
+      background: white;
+    
+    }
+    .navbar-inverse .navbar-inner{
+       text-align: center;
+    }
+    
+    .navbar .brand {
+      color: #FFF;
+      font-size: 36px;
+    }
