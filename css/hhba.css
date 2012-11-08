@@ -125,6 +125,8 @@ a {
     }
     .marketing h2 {
       font-weight: normal;
+      font-family: 'Permanent Marker', cursive;
+      
     }
     .marketing .span4 p {
       margin-left: 10px;
