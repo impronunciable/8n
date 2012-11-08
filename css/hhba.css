@@ -139,8 +139,9 @@ a {
       margin: 80px 0; /* Space out the Bootstrap <hr> more */
     }
     .featurette {
-      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+      padding-top:; /* Vertically center images part 1: add padding above and below text. */
       overflow: hidden; /* Vertically center images part 2: clear their floats. */
+      text-align: center;
     }
     .featurette-image {
       margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
@@ -161,8 +162,12 @@ a {
       line-height: 1;
       letter-spacing: -1px;
     }
-
-
+    .featurette h2 {
+  margin: 0 0 15px 0;
+}
+  .tweet {
+    margin: 0 auto!important;
+  }
 
     /* RESPONSIVE CSS
     -------------------------------------------------- */
