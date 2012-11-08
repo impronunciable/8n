@@ -5,6 +5,11 @@
   var mapOptions = {
     center: new google.maps.LatLng(0, 0),
     zoom: 3,
+    scrollwheel: false,
+    navigationControl: false,
+    mapTypeControl: false,
+    scaleControl: false,
+    draggable: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
 
