@@ -21,9 +21,9 @@
           var img = document.createElement('img');
           var span = document.createElement('span');
           var a = document.createElement('a');
-    
+
           a.appendChild(img);
-          a.href = '#';
+          a.href = 'http://' + media[i].display_url;
           a.target = '_blank';
           a.appendChild(img);
           a.className = 'thumbnail';
