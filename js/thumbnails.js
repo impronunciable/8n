@@ -4,6 +4,11 @@
 
   var $thumbs = $('.thumbnails');
 
+  var wall = new Masonry( document.getElementById("thumbnails"), {
+    columnWidth: 220
+  });
+
+
   $.getJSON('photos.json', function(tweets){
 
     $.each(tweets, function(index, tweet){
@@ -11,11 +16,28 @@
 
       for(var i = 0; i < media.length; i++) {
         if(media[i].type === "photo") {
-          $thumbs.prepend('<li class="span3"><a href="#" class="thumbnail"><img src="' + media[i].media_url_https + '"></a></li>');
+
+          var img = document.createElement('img');
+          var li = document.createElement('span');
+          var a = document.createElement('a');
+    
+          a.appendChild(img);
+          a.href = 'https://twitter.com/' + tweet.user.screen_name + '/statuses/' + tweet.id;
+          a.className = 'item';
+          a.target = '_blank';
+          a.appendChild(img);
+          li.appendChild(a);
+          img.src = media[i].media_url_https;
+          img.width = 220;
+          img.onload = function(){
+            $thumbs.prepend(li);
+            wall.reload();
+          };
+
         }
-      }  
-  
+      }
     });
+
 
   });
        
