@@ -22,12 +22,20 @@
         add: function(obj) {
             var key = 'widget-' + (this._count++);
             this._list[key] = this.parse(obj);
-            this._list[key].appendTo(this._container);
+            this._container.append(this._list[key]);
+            return key;
         },
 
         /* TODO */
         remove: function() {
 
+        },
+
+        /**
+         * @param key Unique ID for the widget
+         */
+        get: function(key) {
+            return this._list[key] || false;
         },
 
         /**
@@ -59,6 +67,7 @@
 
         $.getJSON('tweets.json', function(tweets){
             hhba.tweets = tweets;
+            $doc.trigger('TWEETS_LOADED');
             console.log(tweets);
         }); 
     };
