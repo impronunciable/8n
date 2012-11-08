@@ -5,7 +5,8 @@
   var $thumbs = $('.thumbnails');
 
   var wall = new Masonry( document.getElementById("thumbnails"), {
-    columnWidth: 220
+    columnWidth: 220,
+    gutterWidth: 20
   });
 
 
