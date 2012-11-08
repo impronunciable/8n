@@ -8,6 +8,7 @@ nav ul{list-style:none}
 body {
     color: #333;
     font-family: sans-serif;
+    background: #FFF url(grey.png) repeat;
 }
 
 a {
