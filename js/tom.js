@@ -20,6 +20,7 @@
     "use strict";
 
     var App = global.hhba = global.hhba || {},
+        $doc = $(document),
 
         backColor = '#2f2f2f',
         gridlinesColor = '#3e3e3e',
@@ -34,9 +35,14 @@
                     height: 250,
                     legend: 'none',
                     backgroundColor: backColor,
+                    animation: {
+                        duration: 500
+                    },
                     chartArea: {
                         width: '85%',
-                        height: '80%'
+                        height: '80%',
+                        left: 50,
+                        top: '10%'
                     },
                     lineWidth: 3,
                     hAxis: {
@@ -56,36 +62,92 @@
                         }
                     },
                     colors: [color1, color2, color3, color4]
-                };
+                },
 
-    $(document).bind('GOOGLE_API_LOADED', function() {
+        isTweetsLoaded = false,
+        isGoogleApiLoaded = false,
+        isChartReady = false,
 
-        App.widgets.parsers.LineChart = function(info) {
-            var $pie = $('<div class="pie" style="margin: 20px"></div>');
-            new google.visualization.LineChart($pie[0]).draw(info.data, info.style);
-            return $pie;
-        };
+        parseTweetsPerHour = function() {
+            console.time('tweetsPerHour');
+            var all = hhba.tweets,
+                i = 0,
+                l = all.length,
+                date = null,
+                hours = [],
+                j;
+            for (j = 0; j < 24; j++) {
+                hours.push(0);
+            }
+            for (; i < l; i++) {
+                date = new Date(all[i].created_at);
+                // only for Nov 8.
+                if (date.getDate() === 8) {
+                    hours[date.getHours()]++;
+                }
+            }
+            console.timeEnd('tweetsPerHour');
+            return hours;
+        },
 
-        var data_line = google.visualization.arrayToDataTable([
-            ['Year', 'Sales A', 'Sales B', 'Sales C', 'Sales D'],
-            ['2005',   50,       15,        8,         72],
-            ['2006',   75,       28,        13,        88],
-            ['2007',   43,       31,        25,        91],
-            ['2008',   82,       11,        43,        57],
-            ['2009',   71,       19,        24,        60],
-            ['2010',   47,       55,        68,        31],
-            ['2011',   28,       62,        86,        42]
-        ]);
+        updateChart = function() {
+            if (!isTweetsLoaded || !isChartReady) {
+                return false;
+            }
+            var day1 = parseTweetsPerHour(),
+                i = 0,
+                l = day1.length,
+                data = [],
+                label;
 
+            data.push(['Hora',    '8N']);
+            for (; i < l; i++) {
+                label = (i < 10) ? '0' + i : i+'';
+                data.push([label, day1[i]]);
+            }
+
+            DEFAULT_STYLE.vAxis.maxValue = Math.max.apply(null, day1);
+
+            google.visualization.events.removeAllListeners(chart);
+            chart.draw(google.visualization.arrayToDataTable(data), DEFAULT_STYLE);
+        },
+
+        chart = null;
+
+    App.widgets.parsers.LineChart = function(info) {
+        var $widget = $('<div class="widget" style="margin: 20px"></div>');
+        chart = new google.visualization.LineChart($widget[0]);
+        google.visualization.events.addListener(chart, 'ready', function() {
+            isChartReady = true;
+            updateChart();
+        });
+        chart.draw(info.data, info.style);
+        return $widget;
+    };
+
+    $doc.bind('TWEETS_LOADED', function() {
+        isTweetsLoaded = true;
+        updateChart();
+    });
+    $doc.bind('GOOGLE_API_LOADED', function() {
+        isGoogleApiLoaded = true;
+        var i = 0,
+            data = [];
+
+        data.push(['Hora', '8N']);
+        for (; i < 24; i++) {
+            data.push([((i < 10) ? '0' + i : i+''), 0]);
+        }
+        
         App.widgets.add({
             type: 'LineChart',
             information: {
-                title: 'progress!',
-                data: data_line,
+                title: 'Tweets per hour',
+                data: google.visualization.arrayToDataTable(data),
                 style: DEFAULT_STYLE
             }
         });
-
     });
+
 
 })(window, document, jQuery);
