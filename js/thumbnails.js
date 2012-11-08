@@ -22,7 +22,7 @@
           var a = document.createElement('a');
     
           a.appendChild(img);
-          a.href = 'https://twitter.com/' + tweet.user.screen_name + '/statuses/' + tweet.id;
+          a.href = '#';
           a.className = 'item';
           a.target = '_blank';
           a.appendChild(img);
